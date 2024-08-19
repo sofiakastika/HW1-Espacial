@@ -3,3 +3,4 @@
 # Punto 2 (GeoDA) 
 Cuando quiero crear W^2 me dice "Duplicate Thiessen polygons exist due to duplicate or near-duplicate map points. Press OK to save duplicate polygon ids to Table."
 Mande "Ok" pero no sé que onda
+Los duplicated IDs se guardaron como DUP_IDS
