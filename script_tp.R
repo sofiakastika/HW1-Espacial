@@ -4,9 +4,11 @@ rm(list=ls()) # remueve toda informacion
 library(sf) # trabaja con objetos espaciales
 library(tidyverse) # limpiar datos 
 require(gridExtra)
+library(Hmisc)
+library(stargazer)
 
 #Importo shapefile
-terrenos <- read.csv("C:/Users/sofia/Desktop/Maestría/Optativas/Segundo trimestre/Econometría Espacial/TP Espacial/Terrenos-en-venta-2019.csv")
+terrenos <- read.csv("C:/Users/judit/OneDrive - Económicas - UBA/MaEcon/Econometría Espacial/Homeworks/HW1/Terrenos-en-venta-2019.csv")
 
 #Paso los nombres de las variables a minúscula 
 terrenos1 <- terrenos %>% 
@@ -87,6 +89,76 @@ modelo <- lm(lnprecio ~ m2total + almagro + balvanera + barrac_e + barrac_o + be
 
 #resumen del modelo
 summary(modelo)
+
+# Asigno etiquetas a las variables
+label(terrenos1$lnprecio) <- "Logaritmo del precio en USD"
+label(terrenos1$m2total) <- "Metros cuadrados totales"
+
+# Vector con nombres de las variables dummy
+barrios <- c("almagro", "balvanera", "barrac_e", "barrac_o", "belgrano", 
+             "boedo", "boca", "caballito", "chacarita", "coghlan", 
+             "colegial", "constitu", "fl_norte", "fl_sur", "floresta", 
+             "liniers", "mataderos", "mt_castro", "montserr", "nva_pomp", 
+             "nunez", "palermo", "p_avell", "p_chacab", "p_chas", "p_patric", 
+             "paternal", "p_mader", "recoleta", "retiro", "saavedra", 
+             "san_cris", "san_nico", "san_telmo", "v_sars", "versalles", 
+             "vcrespo", "vdelparq", "v_d_nor", "v_d_sur", "vgmitre", 
+             "vlugano", "vluro", "vortuzar", "vpuerr", "vreal", 
+             "vriachu", "vsrita", "vsoldati", "vurquiza")
+
+# Vector con las etiquetas que solo incluyen el nombre del barrio
+etiquetas_barrios <- c("Almagro", "Balvanera", "Barracas Este", "Barracas Oeste", 
+                       "Belgrano", "Boedo", "La Boca", "Caballito", 
+                       "Chacarita", "Coghlan", "Colegiales", "Constitución", 
+                       "Flores Norte", "Flores Sur", "Floresta", "Liniers", 
+                       "Mataderos", "Monte Castro", "Monserrat", "Nueva Pompeya", 
+                       "Núñez", "Palermo", "Parque Avellaneda", 
+                       "Parque Chacabuco", "Parque Chas", "Parque Patricios", 
+                       "Paternal", "Puerto Madero", "Recoleta", "Retiro", 
+                       "Saavedra", "San Cristóbal", "San Nicolás", 
+                       "San Telmo", "Vélez Sarsfield", "Versalles", 
+                       "Villa Crespo", "Villa del Parque", "Villa Devoto Norte", 
+                       "Villa Devoto Sur", "Villa General Mitre", "Villa Lugano", 
+                       "Villa Luro", "Villa Ortuzar", "Villa Pueyrredón", 
+                       "Villa Real", "Villa Riachuelo", "Villa Santa Rita", 
+                       "Villa Soldati", "Villa Urquiza")
+
+# Loop para asignar las etiquetas a las variables
+for (i in seq_along(barrios)) {
+  label(terrenos1[[barrios[i]]]) <- etiquetas_barrios[i]
+}
+
+stargazer(modelo, type = "latex",
+          title = "Resultados de la Regresión",
+          label = "tab:resultados_regresion",
+          dep.var.labels = c("Logaritmo del Precio en USD"),
+          covariate.labels = c("Metros Cuadrados Totales", 
+                               "Almagro", "Balvanera", "Barracas Este", "Barracas Oeste",
+                               "Belgrano", "Boedo", "La Boca", "Caballito", 
+                               "Chacarita", "Coghlan", "Colegiales", "Constitución", 
+                               "Flores Norte", "Flores Sur", "Floresta", "Liniers", 
+                               "Mataderos", "Monte Castro", "Monserrat", "Nueva Pompeya", 
+                               "Núñez", "Palermo", "Parque Avellaneda", 
+                               "Parque Chacabuco", "Parque Chas", "Parque Patricios", 
+                               "Paternal", "Puerto Madero", "Recoleta", "Retiro", 
+                               "Saavedra", "San Cristóbal", "San Nicolás", 
+                               "San Telmo", "Villa Sarsfield", "Versalles", 
+                               "Villa Crespo", "Villa del Parque", "Villa del Norte", 
+                               "Villa del Sur", "Villa General Mitre", "Villa Lugano", 
+                               "Villa Luro", "Villa Ortuzar", "Villa Pueyrredón", 
+                               "Villa Real", "Villa Riachuelo", "Villa Santa Rita", 
+                               "Villa Soldati", "Villa Urquiza"),
+          out = "resultados_regresion.tex")
+
+
+# Guardo los residuos del modelo
+residuos <- modelo$residuals
+
+# Añadir los residuos al data frame
+terrenos1$residuos <- residuos
+
+write.csv(terrenos1, "C:/Users/judit/OneDrive - Económicas - UBA/Documentos/GitHub/HW1-Espacial/terrenos1_con_residuos.csv", row.names = FALSE)
+
 
 #Descargo nueva base .csv
 write.csv(terrenos1,"C:/Users/sofia/Desktop/Maestría/Optativas/Segundo trimestre/Econometría Espacial/TP Espacial/dataset1.csv", row.names = FALSE)
