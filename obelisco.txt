@@ -1,0 +1,2 @@
+Nombre,Latitud,Longitud
+Obelisco,-34.60353576205991, -58.3815811322597
