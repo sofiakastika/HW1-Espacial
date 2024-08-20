@@ -158,11 +158,14 @@ residuos <- modelo$residuals
 # Añadir los residuos al data frame
 terrenos1$residuos <- residuos
 
-write.csv(terrenos1, "C:/Users/judit/OneDrive - Económicas - UBA/Documentos/GitHub/HW1-Espacial/terrenos1_con_residuos.csv", row.names = FALSE)
-
+#write.csv(terrenos1, "C:/Users/judit/OneDrive - Económicas - UBA/Documentos/GitHub/HW1-Espacial/terrenos1_con_residuos.csv", row.names = FALSE)
 
 #Descargo nueva base .csv
-write.csv(terrenos1,"C:/Users/sofia/Desktop/Maestría/Optativas/Segundo trimestre/Econometría Espacial/TP Espacial/dataset1.csv", row.names = FALSE)
+#write.csv(terrenos1,"C:/Users/sofia/Desktop/Maestría/Optativas/Segundo trimestre/Econometría Espacial/TP Espacial/dataset1.csv", row.names = FALSE)
 
+###################### 
+# Ejercicios 3,4,5,6 #
+######################
 
-
+# Importo la base creada en QGIS desde GitHub
+terrenos_2 <- read.csv("https://github.com/sofiakastika/HW1-Espacial/blob/main/base_def.csv")
