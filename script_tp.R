@@ -167,5 +167,6 @@ terrenos1$residuos <- residuos
 # Ejercicios 3,4,5,6 #
 ######################
 
-# Importo la base creada en QGIS desde GitHub
-terrenos_2 <- read.csv("https://github.com/sofiakastika/HW1-Espacial/blob/main/base_def.csv")
+# Importo la base creada en QGIS desde mi escritorio porque de github lo lee mal no se que
+terrenos_2 <- read.csv("/Users/tomasmarotta/Documents/GitHub/HW1-Espacial/base_def_def.csv")
+
