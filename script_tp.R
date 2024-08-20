@@ -8,7 +8,8 @@ library(Hmisc)
 library(stargazer)
 
 #Importo shapefile
-terrenos <- read.csv("C:/Users/judit/OneDrive - Económicas - UBA/MaEcon/Econometría Espacial/Homeworks/HW1/Terrenos-en-venta-2019.csv")
+terrenos <- read.csv("https://raw.githubusercontent.com/sofiakastika/HW1-Espacial/main/Terrenos-en-venta-2019.csv")
+
 
 #Paso los nombres de las variables a minúscula 
 terrenos1 <- terrenos %>% 
