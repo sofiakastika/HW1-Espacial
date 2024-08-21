@@ -6,6 +6,7 @@ library(tidyverse) # limpiar datos
 require(gridExtra)
 library(Hmisc)
 library(stargazer)
+library(dplyr)
 
 #Importo shapefile
 terrenos <- read.csv("https://raw.githubusercontent.com/sofiakastika/HW1-Espacial/main/Terrenos-en-venta-2019.csv")
@@ -168,5 +169,10 @@ terrenos1$residuos <- residuos
 ######################
 
 # Importo la base creada en QGIS desde mi escritorio porque de github lo lee mal no se que
-terrenos_2 <- read.csv("/Users/tomasmarotta/Documents/GitHub/HW1-Espacial/base_def_def.csv")
+terrenos_2 <- read.csv("/Users/tomasmarotta/Documents/GitHub/HW1-Espacial/BASEFINAL.csv")
 
+# Le cambio el nombre a algunas variables
+terrenos_2 <- terrenos_2 %>% 
+  rename( dist_subte = Distance, dist_tren = Distancia_tren, dist_obe = Distancia_obelisco.correcta. , count_delitos = NUMPOINTS )
+
+terrenos_2 <- subset(terrenos_2, select = -Distancia_obelisco)
