@@ -197,4 +197,24 @@ modelo_ej4 <- lm(lnprecio ~ m2total + almagro + balvanera + barrac_e + barrac_o 
                dist_subte + dist_tren + dist_obe + count_delitos
                , data = terrenos_mergeado)
 
-
+stargazer(modelo_ej4, type = "latex",
+          title = "Resultados de la Regresión",
+          label = "tab:resultados_regresion",
+          dep.var.labels = c("Logaritmo del Precio en USD"),
+          covariate.labels = c("Metros Cuadrados Totales", 
+                               "Almagro", "Balvanera", "Barracas Este", "Barracas Oeste",
+                               "Belgrano", "Boedo", "La Boca", "Caballito", 
+                               "Chacarita", "Coghlan", "Colegiales", "Constitución", 
+                               "Flores Norte", "Flores Sur", "Floresta", "Liniers", 
+                               "Mataderos", "Monte Castro", "Monserrat", "Nueva Pompeya", 
+                               "Núñez", "Palermo", "Parque Avellaneda", 
+                               "Parque Chacabuco", "Parque Chas", "Parque Patricios", 
+                               "Paternal", "Puerto Madero", "Recoleta", "Retiro", 
+                               "Saavedra", "San Cristóbal", "San Nicolás", 
+                               "San Telmo", "Villa Sarsfield", "Versalles", 
+                               "Villa Crespo", "Villa del Parque", "Villa del Norte", 
+                               "Villa del Sur", "Villa General Mitre", "Villa Lugano", 
+                               "Villa Luro", "Villa Ortuzar", "Villa Pueyrredón", 
+                               "Villa Real", "Villa Riachuelo", "Villa Santa Rita", 
+                               "Villa Soldati", "Villa Urquiza"),
+          out = "resultados_regresion_ej4.tex")
