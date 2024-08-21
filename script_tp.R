@@ -197,3 +197,4 @@ modelo_ej4 <- lm(lnprecio ~ m2total + almagro + balvanera + barrac_e + barrac_o 
                dist_subte + dist_tren + dist_obe + count_delitos
                , data = terrenos_mergeado)
 
+
