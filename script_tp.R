@@ -171,8 +171,29 @@ terrenos1$residuos <- residuos
 # Importo la base creada en QGIS desde mi escritorio porque de github lo lee mal no se que
 terrenos_2 <- read.csv("/Users/tomasmarotta/Documents/GitHub/HW1-Espacial/BASEFINAL.csv")
 
-# Le cambio el nombre a algunas variables
-terrenos_2 <- terrenos_2 %>% 
-  rename( dist_subte = Distance, dist_tren = Distancia_tren, dist_obe = Distancia_obelisco.correcta. , count_delitos = NUMPOINTS )
-
+# Elimino distancia al obelisco incorrecta
 terrenos_2 <- subset(terrenos_2, select = -Distancia_obelisco)
+
+# Le cambio el nombre a algunas variables para mergear en terrenos1
+terrenos_2 <- terrenos_2 %>% 
+  rename(poly_id = POLY_ID, dist_subte = Distance, dist_tren = Distancia_tren, dist_obe = Distancia_obelisco.correcta. , count_delitos = NUMPOINTS )
+
+# Seleccionar solo las columnas que te interesan de terrenos_2 para mergear en terrenos1
+terrenos_2_subset <- terrenos_2 %>% select(poly_id, dist_subte, dist_tren, dist_obe, count_delitos)
+
+# Hacer el merge usando left_join
+terrenos_mergeado <- terrenos1 %>% 
+  left_join(terrenos_2_subset, by = "poly_id")
+
+## Ejercicio 4 ##
+
+# Estimo el mismo modelo que en el punto (1) pero sumando las variables creadas en el punto (3)
+modelo_ej4 <- lm(lnprecio ~ m2total + almagro + balvanera + barrac_e + barrac_o + belgrano + boedo + boca + caballito + chacarita +
+               coghlan + colegial + constitu + fl_norte + fl_sur + floresta + liniers + mataderos + mt_castro +
+               montserr + nva_pomp + nunez + palermo + p_avell + p_chacab + p_chas + p_patric + paternal + p_mader +
+               recoleta + retiro + saavedra + san_cris + san_nico + san_telmo + v_sars + versalles + vcrespo +
+               vdelparq + v_d_nor + v_d_sur + vgmitre + vlugano + vluro + vortuzar + vpuerr + vreal + vriachu +
+               vsrita + vsoldati + vurquiza +
+               dist_subte + dist_tren + dist_obe + count_delitos
+               , data = terrenos_mergeado)
+
