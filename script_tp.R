@@ -25,9 +25,8 @@ terrenos1 <- terrenos1 %>%
 terrenos1 <- terrenos1 %>%
   mutate(lnm2total = log(m2total))
 
-#Elimino valores sin sentido en las variables
-terrenos1 <- terrenos1[!is.infinite(terrenos1$lnm2total) & !is.infinite(terrenos1$lnprecio), ]
-
+#Elimino las observaciones con m2total=0
+terrenos1 <- terrenos1[terrenos1$m2total != 0, ]
 
 # Variable barrio como factor
 terrenos1$barrio <- as.factor(terrenos1$barrio)
