@@ -225,4 +225,9 @@ residuos_ej4 <- modelo_ej4$residuals
 # Añadir los residuos al data frame
 terrenos_mergeado$residuos_ej4 <- residuos
 
-write.csv(terrenos_mergeado, "/Users/tomasmarotta/Documents/GitHub/HW1-Espacial/terrenos_mergeado_resid", row.names = FALSE)
+write.csv(terrenos_mergeado, 
+          "/Users/tomasmarotta/Documents/GitHub/HW1-Espacial/terrenos_mergeado_resid.csv", 
+          row.names = FALSE)
+
+# Ejercicio 6
+terrenos_3 <- read.csv("/Users/tomasmarotta/Documents/GitHub/HW1-Espacial/terrenos_final.csv")
