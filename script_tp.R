@@ -90,34 +90,20 @@ terrenos_mergeado <- terrenos1 %>%
 
 ## Ejercicio 4 ##
 
-# Estimo el mismo modelo que en el punto (1) pero sumando las variables creadas en el punto (3)
-modelo_ej4 <- lm(lnprecio ~ m2total + almagro + balvanera + barrac_e + barrac_o + belgrano + boedo + boca + caballito + chacarita +
-               coghlan + colegial + constitu + fl_norte + fl_sur + floresta + liniers + mataderos + mt_castro +
-               montserr + nva_pomp + nunez + palermo + p_avell + p_chacab + p_chas + p_patric + paternal + p_mader +
-               recoleta + retiro + saavedra + san_cris + san_nico + san_telmo + v_sars + versalles + vcrespo +
-               vdelparq + v_d_nor + v_d_sur + vgmitre + vlugano + vluro + vortuzar + vpuerr + vreal + vriachu +
-               vsrita + vsoldati + vurquiza +
-               dist_subte + dist_tren + dist_obe + count_delitos
-               , data = terrenos_mergeado)
+# Modelo con fixed effects por barrio
+modelo3 <- lm(lnprecio ~ lnm2total + barrio +
+                dist_subte + dist_tren + dist_obe + count_delitos, data = terrenos_mergeado)
+summary(modelo3) #resumen del modelo
+n_obs3 <- nobs(modelo3) #cantidad de observaciones en el modelo
+print(n_obs3)
 
-stargazer(modelo_ej4, type = "latex",
-          title = "Resultados de la Regresión",
-          label = "tab:resultados_regresion",
-          dep.var.labels = c("Logaritmo del Precio en USD"),
-          covariate.labels = c("Metros Cuadrados Totales", 
-                               "Almagro", "Balvanera", "Barracas Este", "Barracas Oeste",
-                               "Belgrano", "Boedo", "La Boca", "Caballito", 
-                               "Chacarita", "Coghlan", "Colegiales", "Constitución", 
-                               "Flores Norte", "Flores Sur", "Floresta", "Liniers", 
-                               "Mataderos", "Monte Castro", "Monserrat", "Nueva Pompeya", 
-                               "Núñez", "Palermo", "Parque Avellaneda", 
-                               "Parque Chacabuco", "Parque Chas", "Parque Patricios", 
-                               "Paternal", "Puerto Madero", "Recoleta", "Retiro", 
-                               "Saavedra", "San Cristóbal", "San Nicolás", 
-                               "San Telmo", "Villa Sarsfield", "Versalles", 
-                               "Villa Crespo", "Villa del Parque", "Villa del Norte", 
-                               "Villa del Sur", "Villa General Mitre", "Villa Lugano", 
-                               "Villa Luro", "Villa Ortuzar", "Villa Pueyrredón", 
-                               "Villa Real", "Villa Riachuelo", "Villa Santa Rita", 
-                               "Villa Soldati", "Villa Urquiza"),
-          out = "resultados_regresion_ej4.tex")
+#Saco a latex tabla 
+stargazer(modelo3, 
+          type = "latex",
+          dep.var.labels = c("Precio (log USD)"),
+          covariate.labels = c("M2 totales (log)", "EF por barrio", 
+                               "Distancia subte", "Dist. tren", "Dist. obelisco", "Delitos"),
+          omit.stat = c("ser", "f", "adj.rsq"),
+          align = TRUE,
+          no.space = TRUE,
+          title = "")
