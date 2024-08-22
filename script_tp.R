@@ -1,6 +1,3 @@
-#Importo shapefile
-terrenos <- read.csv("https://raw.githubusercontent.com/sofiakastika/HW1-Espacial/main/Terrenos-en-venta-2019.csv")
-
 
 #Remuevo toda la información
 rm(list=ls()) 
@@ -14,7 +11,7 @@ require(gridExtra)
 library(stargazer)
 
 #Importo shapefile
-terrenos <- read.csv("C:/Users/sofia/Desktop/Maestría/Optativas/Segundo trimestre/Econometría Espacial/TP Espacial/Terrenos-en-venta-2019.csv")
+terrenos <- read.csv("https://raw.githubusercontent.com/sofiakastika/HW1-Espacial/main/Terrenos-en-venta-2019.csv")
 
 #Paso los nombres de las variables a minúscula 
 terrenos1 <- terrenos %>% 
