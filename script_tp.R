@@ -43,12 +43,13 @@ summary(modelo2) #resumen del modelo
 n_obs2 <- nobs(modelo2) #cantidad de observaciones en el modelo
 print(n_obs2)
 
-#Saco a latex tabla 
+#Saco a latex tabla sin coeficientes de barrio
 stargazer(modelo2, modelo1, 
           type = "latex",
           dep.var.labels = c("Logaritmo precio en dólares"),
           covariate.labels = c("Logaritmo metros cuadrados totales", "FE por barrio"),
           omit.stat = c("ser", "f", "adj.rsq"),
+          omit = "barrio",  # Omite todos los coeficientes que comienzan con 'barrio'
           align = TRUE,
           no.space = TRUE,
           title = "",
@@ -73,6 +74,9 @@ terrenos1$residuos <- residuos
 # Importo la base creada en QGIS desde mi escritorio porque de github lo lee mal no se que
 terrenos_2 <- read.csv("/Users/tomasmarotta/Documents/GitHub/HW1-Espacial/BASEFINAL.csv")
 
+#Elimino las observaciones con m2total=0
+terrenos_2 <- terrenos_2[terrenos_2$M2TOTAL != 0, ]
+
 # Elimino distancia al obelisco incorrecta
 terrenos_2 <- subset(terrenos_2, select = -Distancia_obelisco)
 
@@ -96,13 +100,22 @@ summary(modelo3) #resumen del modelo
 n_obs3 <- nobs(modelo3) #cantidad de observaciones en el modelo
 print(n_obs3)
 
-#Saco a latex tabla 
+# Saco a latex tabla sin coeficientes de barrio
 stargazer(modelo3, 
           type = "latex",
           dep.var.labels = c("Precio (log USD)"),
-          covariate.labels = c("M2 totales (log)", "EF por barrio", 
-                               "Distancia subte", "Dist. tren", "Dist. obelisco", "Delitos"),
+          covariate.labels = c("M2 totales (log)", "Distancia subte", "Dist. tren", "Dist. obelisco", "Delitos"),
+          omit = "barrio",  # Omite todos los coeficientes que comienzan con 'barrio'
           omit.stat = c("ser", "f", "adj.rsq"),
           align = TRUE,
           no.space = TRUE,
           title = "")
+
+# Guardo los residuos del modelo
+Residuos_Ej_4 <- modelo3$residuals
+
+# Añadir los residuos al data frame
+terrenos_mergeado$Residuos_Ej_4 <- Residuos_Ej_4
+
+#Descargo nueva base .csv
+write.csv(terrenos_mergeado, "/Users/tomasmarotta/Documents/GitHub/HW1-Espacial/terrenos_mergeado_resid.csv", row.names = FALSE)
